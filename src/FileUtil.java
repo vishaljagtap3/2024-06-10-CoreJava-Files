@@ -5,6 +5,53 @@ import java.io.IOException;
 
 public class FileUtil {
 
+    public static void listFileHierarchy(String path, int tabs) {
+        File file = new File(path);
+        if(!file.exists()) {
+            return;
+        }
+
+        for(int i = 0; i < tabs; i++) {
+            System.out.print("\t");
+        }
+        System.out.println((file.isFile()? "F:" : "D:") + file.getName());
+
+        if(file.isDirectory()) {
+            File[] files = file.listFiles();
+            tabs++;
+            if (files != null) {
+                for (File file1 : files) {
+                    listFileHierarchy(file1.getAbsolutePath(), tabs);
+                }
+            }
+        }
+
+
+        return;
+    }
+
+    public static void deleteAll(String path) {
+        File file = new File(path);
+        if(!file.exists()) {
+            return;
+        }
+
+        if(file.isFile()) {
+            file.delete();
+            return;
+        }
+
+        File [] files = file.listFiles();
+        if(files != null) {
+            for(File file1 : files) {
+                deleteAll(file1.getAbsolutePath());
+            }
+        }
+
+        file.delete();
+        return;
+    }
+
     public static void printFileInfo(File file) {
         System.out.println("Path: " + file.getAbsolutePath());
         System.out.println("Size: " + file.length());
@@ -87,7 +134,13 @@ public class FileUtil {
         }
 
         //File [] files = dir.listFiles();
-        File [] files = dir.listFiles( new MyFileFilter());
+        //File [] files = dir.listFiles( new MyFileFilter());
+        File [] files = dir.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                return file.isDirectory() && file.getName().startsWith("d");
+            }
+        });
         for(File file : files) {
             System.out.println( (file.isFile() ? "F: " : "D: ") + file.getName());
         }

@@ -4,6 +4,8 @@ public class Main {
     public static void main(String[] args) {
 
         String basePath = "/Users/vishal/java/workspaces/demo_files/";
+        FileUtil.listFileHierarchy(basePath, 0);
+
 
         //File file = new File(basePath, "magicfile.txt");
 
@@ -45,9 +47,9 @@ public class Main {
         System.out.println("--------------------------");
         FileUtil.printFilesList("/Users/vishal/");*/
 
-        FileUtil.printFilesListV1(basePath);
+        /*FileUtil.printFilesListV1(basePath);
         System.out.println("--------------------------");
-        FileUtil.printFilesListV1("/Users/vishal/");
+        FileUtil.printFilesListV1("/Users/vishal/");*/
 
     }
 }
